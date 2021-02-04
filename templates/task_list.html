@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}To-do{% endblock title %}
+
+{% block content %}
+{% if tasks %}
+{% for task in tasks %}
+<p>
+<div class="col">
+      <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 fw-normal">{{ task.title }} | {{ task.date }}</h4> <p> <h6><a href="{% url 'task_update' task.id %}">Update</a> |
+          <a href="{% url 'task_delete' task.id %}">Delete</a></h6>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title"><p class="lead">{{ task.body }}</p></h1>
+          <form method="post">
+              {% csrf_token %}
+              <button type="submit" value="{{ task.id }}" name="id" class="w-60 btn btn-lg btn-outline-primary">Done</button>
+          </form>
+      </div>
+    </div>
+    </div>
+{% endfor %}
+{% else %}
+<p>
+<h2>Nothing to do</h2>
+{% endif %}
+{% endblock content %}

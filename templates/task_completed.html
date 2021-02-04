@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}To-do{% endblock title %}
+
+{% block content %}
+{% if not object_list %}
+<p>
+<h2>There ain't tasks</h2>
+{% else %}
+{% for task in object_list %}
+<p>
+<div class="col">
+      <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 fw-normal">{{ task.title }} | {{ task.date }}</h4> <p> <h6>
+          <a href="{% url 'task_delete' task.id %}">Delete</a></h6>
+      </div>
+      <div class="card-body">
+        <h1 class="card-title pricing-card-title"><p class="lead">{{ task.body }}</p></h1>
+          <form method="post">
+              {% csrf_token %}
+              <button type="submit" value="{{ task.id }}" name="id" class="w-60 btn btn-lg btn-outline-primary">Active</button>
+          </form>
+      </div>
+    </div>
+    </div>
+{% endfor %}
+{% endif %}
+{% endblock content %}
